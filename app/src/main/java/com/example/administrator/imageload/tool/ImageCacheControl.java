@@ -12,7 +12,7 @@ import static android.content.ContentValues.TAG;
 
 public class ImageCacheControl implements IImageCacheControl {
     private IImageCache diskCache = new DiskCache();
-    private IImageCache memoryCache = new MemoryCache();
+    private IImageCache memoryCache = MemoryCache.getInstance();
 
     @Override
     public void saveBitmapToCache(String url, Bitmap bitmap) {

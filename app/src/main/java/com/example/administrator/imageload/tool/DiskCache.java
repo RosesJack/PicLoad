@@ -30,11 +30,14 @@ public class DiskCache implements IImageCache {
     }
 
     @Override
-    public void save(String url, Bitmap bitmap) {
+    public synchronized void save(String url, Bitmap bitmap) {
         String key = MD5Util.String2MD5(url);
         try {
             //url maybe illegal as file name
             cacheFile = new File(file, key);
+            if (cacheFile.exists()) {
+                return;
+            }
             OutputStream outputStream = new FileOutputStream(cacheFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
         } catch (Exception e) {
